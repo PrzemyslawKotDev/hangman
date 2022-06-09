@@ -33,6 +33,11 @@ function buildHangmanGenerator (containerID){
 }
 
 function generateHangman(){
+    const password = document.getElementById('hangmanInput');
+    //DODAĆ WARUNEK ŻE PASSWORD NIE MOŻE BYĆ PUSTY
+    const hangmanInstance = new Hangman (password.value, 5);
+          hangmanInstance.getPuzzle(password);
+
 
   const hangman = document.getElementById('hangmanContainer');
         hangman.classList.add('blackBackground');
@@ -41,6 +46,7 @@ function generateHangman(){
   const hangmanPassword = document.createElement('div');
         hangmanPassword.setAttribute('target', 'hangmanGame');
         hangmanPassword.setAttribute('id', 'hangmanPassword');
+        hangmanPassword.innerText = `${hangmanInstance.puzzled.join('')}`;
 
         hangman.append(hangmanPassword);
 
@@ -76,7 +82,7 @@ function generateHangman(){
             resetButton.setAttribute('target', 'hangmanGame');
             resetButton.setAttribute('id', 'resetButton');
             resetButton.setAttribute('onclick', 'resetHangman()');
-            resetButton.innerText = 'Reset';
+            resetButton.innerText = 'RESET';
 
             hangman.append(resetButton);
 
@@ -88,11 +94,13 @@ function generateBoard(){
 
     for (let i = 1; i <= 26; i++) {
 		let keys = 64 + i;
+        let letter = String.fromCharCode(keys)
 
       const letterButton = document.createElement('button');
             letterButton.setAttribute('target', 'hangmanGame');
+            letterButton.setAttribute('id', `hangmanGame${letter}`);
             letterButton.classList.add('letter')
-            letterButton.innerText = `${String.fromCharCode(keys)}`;
+            letterButton.innerText = letter;
 
             hangmanBoard.append(letterButton);
 
@@ -118,25 +126,14 @@ Hangman.prototype.getPuzzle = function (){
     })
 }
 Hangman.prototype.guessLetter = function (guessedLetter){
-    let lettersIndex = [];
-    if(this.letters.indexOf(guessedLetter) > 0){
-        console.log('letter already checked!')
-    } else {
-    this.letters.push(guessedLetter);
     this.word.forEach((letter, index)=>{
         if(letter === guessedLetter) {lettersIndex.push(index)} 
-    })}
+    });
     for(let i=0; i<lettersIndex.length; i++){
         this.puzzled.splice(lettersIndex[i], 1, guessedLetter);
     }
     console.log(this.puzzled);
 }
-const game1 = new Hangman ('cat', 3);
-game1.getPuzzle('cat')
-console.log(game1.guessLetter('a'))
-console.log(game1.guessLetter('d'))
-console.log(game1.guessLetter('c'))
-console.log(game1.guessLetter('b'))
-console.log(game1.guessLetter('t'))
+//console.log(game1.guessLetter('t'))
 
 window.onload = buildHangmanGenerator('container');
