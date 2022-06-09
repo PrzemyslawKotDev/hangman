@@ -1,5 +1,63 @@
-#hangman[target=hangmanGame]{
+body{
+    margin: 0;
+}
+
+
+
+*[target=hangmanGame]{
+    display: flex;
+    justify-content: center;
+}
+.blackBackground{
+    background-color: black;
+}
+#hangmanContainer[target=hangmanGame]{
     width: 100%;
-    background-color: aqua;
     height: 100vh;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+#hangmanTitle[target=hangmanGame]{
+    width: 100%;
+    font-size: 1.5em;
+}
+#hangmanInput[target=hangmanGame]{
+    width: 55%;
+    padding: 0.3em;
+}
+#hangmanButtonGenerate[target=hangmanGame]{
+    padding: 0.3em;
+    background-color: chartreuse;
+    border: none;
+    width: 55%;
+    align-items: center;
+    margin: 1em;
+}
+
+
+#gameContent[target=hangmanGame]{
+    height: 88vh;
+    width: 100%;
+    justify-content: space-evenly;
+}
+#hangmanPassword[target=hangmanGame]{
+    width: 100%;
+    height: 50px;
+}
+#hangmanImageContainer[target=hangmanGame]{
+    padding: 1em;
+    width: 45%;
+    align-content: center;
+}
+#hangmanBoard[target=hangmanGame]{
+    width: 45%;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    align-content: center;
+    padding: 1em;
+}
+.letter[target=hangmanGame]{
+    height: 60px;
+    width: 60px;
+    align-items: center;
 }
