@@ -58,8 +58,8 @@ function generateHangman(chances){
     let regex = /^[A-Za-z\s]*$/;
     const password = document.getElementById('hangmanInput');
     if(regex.test(password.value)){
-
-    hangmanInstance = new Hangman (password.value, chances);
+        let word = password.value.toUpperCase().split('');
+    hangmanInstance = new Hangman (word, chances);
     hangmanInstance.getPuzzle(password);
 
 const hangman = document.getElementById('hangmanContainer');
@@ -137,40 +137,44 @@ function resetHangman(){
 }
 
 function checkLetter(letter){
+    console.log(typeof letter);
+    console.log(letter);
     hangmanInstance.guessLetter(letter);
 let hangmanPassword = document.getElementById('hangmanPassword');
     hangmanPassword.innerText = `${hangmanInstance.puzzled.join('')}`;
 let hangmanImage = document.getElementById('hangmanImage');
     hangmanImage.innerText = `${hangmanInstance.guess}`;
 }
-
-const Hangman = function (word, guess) {
-    this.word = word.toUpperCase().split('');
-    this.guess = guess;
-    this.puzzled = [];
-}
-
-Hangman.prototype.getPuzzle = function (){
-    return this.word.map((letter)=>{
-        if(letter === ' '){
-            this.puzzled.push(letter)
-        } else this.puzzled.push('_');
-    })
-}
-Hangman.prototype.guessLetter = function (guessedLetter){
-    let lettersIndex = [];
-    this.word.forEach((letter, index)=>{
-        if(letter === guessedLetter) {lettersIndex.push(index)}
-    });
-    if(lettersIndex.length < 1){
-        this.guess = this.guess-1
-    } else {
-        for(let i=0; i<lettersIndex.length; i++){
-            this.puzzled.splice(lettersIndex[i], 1, guessedLetter);
-        }
+class Hangman {
+    constructor(word, guess){
+        this.word = word
+        this.guess = guess;
+        this.puzzled = [];
     }
-    if(this.puzzled.join('') === this.word.join('')) {
-        setTimeout(()=>alert('WIN!'), 50)
+    getPuzzle(){
+        return this.word.map((letter)=>{
+            if(letter === ' '){
+                this.puzzled.push(letter)
+            } else this.puzzled.push('_');
+        })
+    }
+    guessLetter(guessedLetter){
+        let lettersIndex = [];
+        this.word.forEach((letter, index)=>{
+            if(letter === guessedLetter) {lettersIndex.push(index)}
+        });
+        if(lettersIndex.length < 1){
+            this.guess = this.guess-1
+        } else {
+            for(let i=0; i<lettersIndex.length; i++){
+                this.puzzled.splice(lettersIndex[i], 1, guessedLetter);
+            }
+        }
+        if(this.puzzled.join('') === this.word.join('')) {
+            document.querySelectorAll('.letter').forEach(button=>button.removeAttribute('onclick'));
+            setTimeout(()=>alert('WIN!'), 50);
+
+        }
     }
 }
 
