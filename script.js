@@ -123,6 +123,7 @@ function generateBoard(){
 
       const letterButton = document.createElement('button');
             letterButton.setAttribute('target', 'hangmanGame');
+            letterButton.setAttribute('id', `letter${letter}`);
             letterButton.setAttribute('onclick', `checkLetter('${letter}')`);
             letterButton.classList.add('letter')
             letterButton.innerText = letter;
@@ -170,6 +171,7 @@ class Hangman {
                 this.puzzled.splice(lettersIndex[i], 1, guessedLetter);
             }
         }
+        document.getElementById(`letter${guessedLetter}`).classList.add('hide')
         if(this.puzzled.join('') === this.word.join('')) {
             document.querySelectorAll('.letter').forEach(button=>button.removeAttribute('onclick'));
             setTimeout(()=>alert('WIN!'), 50);
