@@ -58,7 +58,7 @@ function generateHangman(chances){
     let regex = /^[A-Za-z\s]*$/;
     const password = document.getElementById('hangmanInput');
     if(regex.test(password.value)){
-        let word = password.value.toUpperCase().split('');
+        let word = password.value.trim().toUpperCase().split('');
     hangmanInstance = new Hangman (word, chances);
     hangmanInstance.getPuzzle(password);
 
